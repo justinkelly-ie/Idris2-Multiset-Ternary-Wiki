@@ -1,0 +1,13 @@
+package Idris2-Multiset-Ternary-Wiki
+version = 0.1.0
+executable = multiset2-ternary-verify
+
+depends = base, idris2-QuickCheck, Idris2-Multiset-Core, Idris2-Multiset-Ternary
+
+sourcedir = "Library"
+
+modules = Wiki.Generators
+        , Wiki.TernaryScaleTransformSpec
+        , Wiki.Main
+
+main = Wiki.Main
