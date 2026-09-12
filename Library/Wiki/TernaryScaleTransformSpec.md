@@ -6,6 +6,7 @@ module Wiki.TernaryScaleTransformSpec
 import Core.BoxInt
 import Core.ScaleTransform
 import Core.NarayAlphabet
+import Logic.TernaryLogic
 import Wiki.Generators
 import public QuickCheck
 
@@ -29,9 +30,21 @@ prop_bit3InvertScaleGalois b =
   in b' == b
 
 public export
+prop_bit3Involution : Bit3 -> Bool
+prop_bit3Involution b =
+  notBit3 (notBit3 b) == b
+
+public export
+prop_bit3AdditiveInverse : Bit3 -> Bool
+prop_bit3AdditiveInverse b =
+  addBit3 b (notBit3 b) == Bit3Zero
+
+public export
 auditTernaryScaleTransformSpecProof : IO Bool
 auditTernaryScaleTransformSpecProof = do
   let r1 = qc prop_bit3ScaleTransformBounded
   let r2 = qc prop_bit3InvertScaleGalois
-  pure (r1.pass == Just True && r2.pass == Just True)
+  let r3 = qc prop_bit3Involution
+  let r4 = qc prop_bit3AdditiveInverse
+  pure (r1.pass == Just True && r2.pass == Just True && r3.pass == Just True && r4.pass == Just True)
 ```
